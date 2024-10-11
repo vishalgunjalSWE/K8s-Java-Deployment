@@ -1,148 +1,22 @@
-Here's a structured README for your Docker Java Kubernetes project, enhanced with emojis for clarity and engagement:
+## 🌟 Project Overview: Docker Java Kubernetes Deployment
 
----
+The **Docker Java Kubernetes Project** is an innovative initiative aimed at harnessing the power of containerization and orchestration to deliver scalable, efficient, and reliable Java applications. This project demonstrates the integration of modern DevOps practices with cloud-native technologies, focusing on seamless deployment and management of applications using Docker and Kubernetes.
 
-# 🚀 Docker Java Kubernetes Project
+### 🔍 Key Objectives:
 
-## 📥 Install Minikube
+- **Containerization**: Utilize Docker to create portable and lightweight containers for Java applications, ensuring consistency across development, testing, and production environments.
+  
+- **Orchestration**: Leverage Kubernetes for automated deployment, scaling, and management of containerized applications, providing high availability and fault tolerance.
 
-### 1. Install `kubectl`
-```bash
-curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.20.4/2021-04-12/bin/linux/amd64/kubectl
-chmod +x ./kubectl
-mkdir -p $HOME/bin
-cp ./kubectl $HOME/bin/kubectl
-export PATH=$HOME/bin:$PATH
-echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
-source $HOME/.bashrc
-kubectl version --short --client
-```
+- **Infrastructure Management**: Implement Infrastructure as Code (IaC) principles using Amazon EKS and eksctl to provision and manage the underlying infrastructure efficiently.
 
-### 2. Install Docker
-```bash
-yum install docker -y
-systemctl start docker
-systemctl enable docker
-```
-- For detailed Minikube installation, refer to the [Minikube Documentation](https://minikube.sigs.k8s.io/docs/start/).
+### 🛠️ Technologies Used:
 
----
+- **Docker**: For containerizing Java applications, enabling quick deployments and easier version management.
+- **Kubernetes**: For orchestrating containerized applications, ensuring seamless scaling and management.
+- **AWS EKS**: To host Kubernetes clusters, leveraging the power of cloud infrastructure for enhanced scalability and reliability.
+- **Maven**: For managing project dependencies and building Java applications.
 
-## 🛠️ Install EKS Setup
+### 📈 Expected Outcomes:
 
-### Step 1: Launch EC2 Instance
-- **Instance Type**: `t2.medium`
-
-### Step 2: Create IAM Role
-- **Policy**: Admin policy for EKS cluster
-- **Attach**: Role to EC2 instance
-
-### Step 3: Install `kubectl`
-```bash
-curl -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/kubectl
-chmod +x ./kubectl
-mkdir -p $HOME/bin
-cp ./kubectl $HOME/bin/kubectl
-export PATH=$HOME/bin:$PATH
-echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
-source $HOME/.bashrc
-kubectl version --short --client
-```
-
-### Step 4: Install `eksctl`
-```bash
-curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-sudo mv /tmp/eksctl /usr/bin
-eksctl version
-```
-
-### Step 5: Create Master Cluster
-```bash
-eksctl create cluster --name=eksdemo \
-                  --region=us-west-1 \
-                  --zones=us-west-1b,us-west-1c \
-                  --without-nodegroup 
-```
-
-### Step 6: Associate IAM OIDC Provider
-```bash
-eksctl utils associate-iam-oidc-provider \
-    --region us-west-1 \
-    --cluster eksdemo \
-    --approve 
-```
-- This allows the service to connect with EKS.
-
-### Step 7: Create Worker Node Group
-```bash
-eksctl create nodegroup --cluster=eksdemo \
-                   --region=us-west-1 \
-                   --name=eksdemo-ng-public \
-                   --node-type=t2.medium \
-                   --nodes=2 \
-                   --nodes-min=2 \
-                   --nodes-max=4 \
-                   --node-volume-size=10 \
-                   --ssh-access \
-                   --ssh-public-key=Praveen-test \
-                   --managed \
-                   --asg-access \
-                   --external-dns-access \
-                   --full-ecr-access \
-                   --appmesh-access \
-                   --alb-ingress-access
-```
-
-### Optional Cleanup Commands
-```bash
-eksctl delete nodegroup --cluster=eksdemo --region=us-east-1 --name=eksdemo-ng-public
-eksctl delete cluster --name=eksdemo --region=us-west-1
-```
-
----
-
-## 🔧 Hands-On
-
-### Deploying Java Applications with Docker and Kubernetes
-
-1. **Build Each Project**
-   ```bash
-   mvn clean install -DskipTests
-   ```
-
-2. **Create Docker Hub Account**
-
-3. **Build the Docker Images Locally**
-   ```bash
-   docker build -t vishalgunjalswe/shopfront:latest .
-   docker build -t vishalgunjalswe/productcatalogue:latest .
-   docker build -t vishalgunjalswe/stockmanager:latest .
-   ```
-
-4. **Push Images to Docker Hub**
-   ```bash
-   docker push vishalgunjalswe/shopfront:latest 
-   docker push vishalgunjalswe/productcatalogue:latest
-   docker push vishalgunjalswe/stockmanager:latest
-   ```
-
-5. **Create Pods in Kubernetes**
-   ```bash
-   kubectl apply -f shopfront-service.yaml
-   kubectl apply -f productcatalogue-service.yaml
-   kubectl apply -f stockmanager-service.yaml
-   ```
-
-6. **Access Services via Minikube**
-   ```bash
-   minikube service shopfront
-   minikube service productcatalogue
-   minikube service stockmanager
-   ```
-
-7. **Open URLs in Browser**
-   - **Order to Build and Deploy**:
-     - `shopfront` → `productcatalogue` → `stockmanager`
-   - **Endpoints**:
-     - Product Endpoint: `/products`
-     - Stock Endpoint: `/stocks`
+By the end of this project, participants will gain hands-on experience in deploying Java applications using Docker and Kubernetes, equipping them with essential skills for modern DevOps roles. This project not only emphasizes technical proficiency but also fosters an understanding of best practices in application deployment, infrastructure management, and continuous integration/continuous deployment (CI/CD).
