@@ -7,5 +7,5 @@ uk/co/danielbryant/djshopping/shopfront/repo/StockRepo.class
 uk/co/danielbryant/djshopping/shopfront/repo/ProductRepo.class
 uk/co/danielbryant/djshopping/shopfront/repo/StockRepo$1.class
 uk/co/danielbryant/djshopping/shopfront/services/ProductService.class
-uk/co/danielbryant/djshopping/shopfront/resources/ProductResource.class
 uk/co/danielbryant/djshopping/shopfront/ShopfrontApplication.class
+uk/co/danielbryant/djshopping/shopfront/resources/ProductResource.class
